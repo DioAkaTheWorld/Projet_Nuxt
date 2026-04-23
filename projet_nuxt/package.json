@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "bluebird": "^3.7.2",
     "crossws": "^0.4.5",
     "mysql2": "^3.22.2",
     "nuxt": "^4.4.2",
@@ -17,5 +18,9 @@
     "vue": "^3.5.32",
     "vue-router": "^5.0.4",
     "vuetify": "^4.0.6"
+  },
+  "devDependencies": {
+    "@types/bluebird": "^3.5.42",
+    "vuetify-nuxt-module": "^0.19.5"
   }
 }
