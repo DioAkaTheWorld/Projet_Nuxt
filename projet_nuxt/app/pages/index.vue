@@ -30,7 +30,7 @@ const { user, logout } = useAuth()
 
     <v-row v-else>
       <v-col v-for="forum in forums" :key="forum.id" cols="12">
-        <v-card hover elevation="2" class="pa-2">
+        <v-card hover elevation="2" class="pa-2" :to="`/forums/${forum.id}`">
           <v-card-item>
             <template v-slot:title>
               <v-icon icon="mdi-forum" color="primary" class="mr-2"></v-icon>
