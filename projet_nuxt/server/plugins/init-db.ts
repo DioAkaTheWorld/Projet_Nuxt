@@ -6,7 +6,7 @@ export default defineNitroPlugin(async (nitroApp) => {
   
   try {
     const connection = await mysql.createConnection({
-      host: '127.0.0.1',
+      host: process.env.DB_HOST || '127.0.0.1', 
       user: 'root',
       password: 'root',
       Promise: bluebird,
