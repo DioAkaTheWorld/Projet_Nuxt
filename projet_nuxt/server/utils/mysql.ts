@@ -11,7 +11,7 @@ export const defineWrappedResponseHandler = <T extends EventHandlerRequest, D>(
         host: 'localhost', 
         user: 'root',
         password: 'root',
-        database: 'movies', 
+        database: 'forum_db', 
         Promise: bluebird,
       })
       

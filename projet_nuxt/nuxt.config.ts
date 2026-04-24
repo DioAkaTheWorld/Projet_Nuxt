@@ -4,6 +4,17 @@ export default defineNuxtConfig({
   modules: [
     'vuetify-nuxt-module'
   ],
+  
+  vuetify: {
+    moduleOptions: {
+
+    },
+    vuetifyOptions: {
+      icons: {
+        defaultSet: 'mdi',
+      }
+    }
+  },
 
   nitro: {
     experimental: {
