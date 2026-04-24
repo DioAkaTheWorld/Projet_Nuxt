@@ -11,12 +11,15 @@ const { user, logout } = useAuth()
       </v-col>
       <v-col class="text-right">
         <template v-if="user">
+          <v-btn v-if="user.role === 'admin'" color="secondary" class="mr-3" prepend-icon="mdi-shield-check" to="/admin">
+            Admin
+          </v-btn>
+          
           <v-chip color="success" class="mr-3" prepend-icon="mdi-account-circle">
             Bonjour, {{ user.username }}
           </v-chip>
           <v-btn color="error" variant="outlined" @click="logout">Déconnexion</v-btn>
         </template>
-        
         <template v-else>
           <v-btn color="primary" variant="outlined" class="mr-3" to="/login">Se connecter</v-btn>
           <v-btn color="primary" to="/register">S'inscrire</v-btn>
