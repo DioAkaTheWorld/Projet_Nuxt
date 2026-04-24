@@ -14,19 +14,41 @@ const editDialog = ref(false)
 const editMessageId = ref(null)
 const editContent = ref('')
 
+const { ws, connect, sendSignal } = useSocket()
+
+
+onMounted(() => {
+  connect()
+  ws.value?.addEventListener('message', (event) => {
+    const data = JSON.parse(event.data)
+    if (data.type === 'update_subject' && data.id == subjectId) {
+      refresh()
+    }
+  })
+})
+
 const sendReply = async () => {
   if (!replyContent.value) return
   isSubmitting.value = true
+  
   try {
     await $fetch('/api/messages/create', {
       method: 'POST',
       body: { subject_id: subjectId, content: replyContent.value }
     })
+    
+    sendSignal('update_subject', subjectId) 
+    
+    if (data.value && data.value.subject) {
+      sendSignal('update_forum', data.value.subject.forum_id) 
+    }
+    
     replyContent.value = ''
     dialog.value = false
     await refresh()
+    
   } catch (e) {
-    alert("Erreur")
+    alert("Erreur lors de l'envoi du message")
   } finally {
     isSubmitting.value = false
   }

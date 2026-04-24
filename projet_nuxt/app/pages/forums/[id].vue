@@ -12,6 +12,7 @@ const newTitle = ref('')
 const newContent = ref('')
 const submitError = ref('')
 const isSubmitting = ref(false)
+const { ws, connect, sendSignal } = useSocket()
 
 const createSubject = async () => {
   if (!newTitle.value || !newContent.value) {
@@ -22,6 +23,13 @@ const createSubject = async () => {
   isSubmitting.value = true
   submitError.value = ''
   
+  if (res.success) {
+    sendSignal('update_forum', forumId)
+    
+    dialog.value = false
+    refresh()
+  }
+
   try {
     const res = await $fetch('/api/subjects/create', {
       method: 'POST',
@@ -41,6 +49,16 @@ const createSubject = async () => {
     isSubmitting.value = false
   }
 }
+
+onMounted(() => {
+  connect() 
+  ws.value?.addEventListener('message', (event) => {
+    const data = JSON.parse(event.data)
+    if (data.type === 'update_forum' && data.id == forumId) {
+      refresh()
+    }
+  })
+})
 
 const formatDate = (dateString) => {
   if (!dateString) return 'Aucun message'

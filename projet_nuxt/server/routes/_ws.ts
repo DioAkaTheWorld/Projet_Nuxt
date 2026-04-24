@@ -1,17 +1,25 @@
+const peers = new Set<any>()
+
 export default defineWebSocketHandler({
   open(peer) {
-    console.log("[ws] open", peer.id);
+    peers.add(peer)
+    console.log("[WS] Nouveau client connecté")
   },
   message(peer, message) {
-    console.log("[ws] message", peer.id, message.text());
-    if (message.text().includes("ping")) {
-      peer.send("pong");
-    }
+    const data = message.text()
+    console.log("[WS] Signal reçu:", data)
+
+    peers.forEach(p => {
+      if (p !== peer) {
+        p.send(data)
+      }
+    })
   },
-  close(peer, event) {
-    console.log("[ws] close", peer.id, event);
+  close(peer) {
+    peers.delete(peer)
+    console.log("[WS] Client déconnecté")
   },
   error(peer, error) {
-    console.log("[ws] error", peer.id, error);
+    peers.delete(peer)
   }
-});
+})
