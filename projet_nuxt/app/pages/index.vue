@@ -1,6 +1,6 @@
 <script setup>
 const { data: forums, pending } = useFetch('/api/forums')
-const { user, logout } = useAuth() // On récupère l'utilisateur et la fonction déconnexion
+const { user, logout } = useAuth() 
 </script>
 
 <template>
